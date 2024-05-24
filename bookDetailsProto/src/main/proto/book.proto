@@ -1,0 +1,12 @@
+syntax= "proto3";
+package com.grpc.GRPC;
+
+option java_multiple_files=true;
+option java_package = "com.grpc.GRPC";
+
+message BookDetails{
+  int32 bookId=1;
+  string name=2;
+  double  price=3;
+  string authorName=4;
+}

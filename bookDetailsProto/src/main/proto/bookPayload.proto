@@ -1,0 +1,32 @@
+syntax= "proto3";
+package  com.grpc.GRPC;
+
+import "book.proto";
+
+option java_multiple_files=true;
+option java_package = "com.grpc.GRPC";
+
+service BooKDetailsService {
+
+  rpc createBook(CreateBookRequest) returns (CreateBookResponse) {
+  }
+  rpc getBook(GetBookRequest) returns (GetBookResponse);
+}
+
+message CreateBookRequest{
+  BookDetails bookDetails=1;
+}
+message CreateBookResponse{
+  oneof message{
+    string successMessage=1;
+    string errorMessage=2;
+  }
+}
+message GetBookRequest{
+  int32 bookId=1;
+}
+
+message GetBookResponse{
+  BookDetails bookDetails=1;
+}
+
