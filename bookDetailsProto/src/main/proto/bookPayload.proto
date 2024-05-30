@@ -2,6 +2,10 @@ syntax= "proto3";
 package  com.grpc.GRPC;
 
 import "book.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+import "google/api/field_behavior.proto";
+import "google/rpc/error_details.proto";
 
 option java_multiple_files=true;
 option java_package = "com.grpc.GRPC";
@@ -11,6 +15,9 @@ service BooKDetailsService {
   rpc createBook(CreateBookRequest) returns (CreateBookResponse) {
   }
   rpc getBook(GetBookRequest) returns (GetBookResponse);
+  rpc getAllBook(GetAllBooksRequest) returns (GetAllBookResponse);
+  rpc updateBook(UpdateBookRequest) returns (UpdateBookResponse);
+  rpc deleteBook(DeleteBookRequest) returns (google.protobuf.Empty);
 }
 
 message CreateBookRequest{
@@ -29,4 +36,25 @@ message GetBookRequest{
 message GetBookResponse{
   BookDetails bookDetails=1;
 }
+message GetAllBooksRequest{
+google.protobuf.Int32Value sizeofPage=1  [(google.api.field_behavior) = OPTIONAL];
+google.protobuf.StringValue order=2    [(google.api.field_behavior) = OPTIONAL];
+}
+message GetAllBookResponse{
+  repeated BookDetails bookDetails=1;
+}
+message UpdateBookRequest{
+  BookDetails bookDetails=1;
+}
+message UpdateBookResponse{
+  BookDetails bookDetails=1;
+}
+message DeleteBookRequest{
+  int32 id=1;
+}
 
+
+message ValidationError {
+  string field = 1;
+  string description = 2;
+}

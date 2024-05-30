@@ -20,22 +20,77 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <version>2.5.4</version>
+        </dependency>
+        <dependency>
             <groupId>net.devh</groupId>
             <artifactId>grpc-server-spring-boot-starter</artifactId>
             <version>2.12.0.RELEASE</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <!--			<version>2.17.0-rc1</version>-->
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.grpc.concept</groupId>
             <artifactId>bookDetailsProto</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
+<!--        <dependency>-->
+<!--            <groupId>org.springdoc</groupId>-->
+<!--            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>-->
+<!--            <version>2.5.0</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -44,6 +99,39 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+                        <!-- Other plugins -->
+                        <plugin>
+                            <groupId>com.diffplug.spotless</groupId>
+                            <artifactId>spotless-maven-plugin</artifactId>
+                            <version>2.17.5</version> <!-- Use the latest version available -->
+                            <configuration>
+                                <java>
+                                    <googleJavaFormat>
+                                        <style>GOOGLE</style> <!-- or AOSP -->
+                                    </googleJavaFormat>
+                                    <includes>
+                                        <include>src/main/java/**/*.java</include>
+                                    </includes>
+                                    <excludes>
+                                        <exclude>src/main/java/com/grpc/concept/s/apiException/**</exclude>
+                                    </excludes>
+
+                                </java>
+
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <goals>
+                                        <goal>apply</goal>
+                                        <goal>check</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+
+                        </plugin>
+
+
         </plugins>
     </build>
 </project>
