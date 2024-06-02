@@ -7,8 +7,6 @@ import com.grpc.concept.s.apiException.InvalidArgumentException;
 import com.grpc.concept.s.apiException.NotFoundException;
 import com.grpc.concept.s.service.BookDetService;
 import io.grpc.StatusRuntimeException;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -25,7 +23,7 @@ public class GrpcClientMock implements Client {
     final BookDetService client;
 
     @Override
-    public CreateBookDetailsResponseDto createBookDet(CreateBookDetails createBookDetails) {
+    public CreateBookDetailsResponseDto createBookDet(CreateBookDetails createBookDetails,String token) {
         log.info("Mock create Book call");
         try{
             CreateBookRequest createBookRequest=CreateBookRequest.newBuilder().
@@ -41,7 +39,7 @@ public class GrpcClientMock implements Client {
     }
 
     @Override
-    public GetBookDetailsResponse getBookDet(GetBookDto getBookDto) {
+    public GetBookDetailsResponse getBookDet(GetBookDto getBookDto,String token) {
         log.info("mock getBookDet call");
         try{
             GetBookResponse response=client.getBooks(GetBookRequest.newBuilder().setBookId(getBookDto.getBookId()).build());
@@ -55,7 +53,7 @@ public class GrpcClientMock implements Client {
     }
 
     @Override
-    public List<GetAllBookResponseDto> getAllBookDet(GetAllBookRequestDto getAllBookRequestDto) {
+    public List<GetAllBookResponseDto> getAllBookDet(GetAllBookRequestDto getAllBookRequestDto,String token) {
         log.info("mock getAllBookDet call");
         List<BookDetails> response=client.getAllBooks(GetAllBooksRequest.newBuilder().setSizeofPage(Int32Value.newBuilder().setValue(getAllBookRequestDto.getPageSize()).build()).build()).getBookDetailsList();
         List<GetAllBookResponseDto> getAllBookResponseDtos=response.stream().map(b->GetAllBookResponseDto.builder().bookId(b.getBookId()).bookName(b.getName()).bookAuthorName(b.getAuthorName()).price(b.getPrice()).build()).toList();
@@ -63,7 +61,7 @@ public class GrpcClientMock implements Client {
     }
 
     @Override
-    public void delBook(DeleteBookRequestDto deleteBookRequestDto) {
+    public void delBook(DeleteBookRequestDto deleteBookRequestDto,String token) {
         log.info("mock delBookDet call");
         try{
             client.deleteBookMethod(DeleteBookRequest.newBuilder().setId(deleteBookRequestDto.getId()).build());
@@ -75,7 +73,7 @@ public class GrpcClientMock implements Client {
     }
 
     @Override
-    public UpdateBookResponseDto updBook(UpdateBookRequestDto updateBookRequestDto, int id) {
+    public UpdateBookResponseDto updBook(UpdateBookRequestDto updateBookRequestDto, int id,String token) {
         log.info("mock updateBookDet call");
         try{
             UpdateBookResponse response=client.updateBooks(UpdateBookRequest.newBuilder()

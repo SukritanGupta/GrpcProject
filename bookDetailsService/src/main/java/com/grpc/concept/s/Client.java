@@ -7,12 +7,12 @@ import com.grpc.concept.s.RestDto.*;
 import java.util.List;
 
 public interface Client {
-   CreateBookDetailsResponseDto createBookDet(CreateBookDetails createBookDetails);
-     GetBookDetailsResponse getBookDet(GetBookDto getBookDto);
+   CreateBookDetailsResponseDto createBookDet(CreateBookDetails createBookDetails,String token);
+     GetBookDetailsResponse getBookDet(GetBookDto getBookDto,String token);
 
-    List<GetAllBookResponseDto> getAllBookDet(GetAllBookRequestDto getAllBookRequestDto);
+    List<GetAllBookResponseDto> getAllBookDet(GetAllBookRequestDto getAllBookRequestDto,String token);
 
-     void delBook(DeleteBookRequestDto deleteBookRequestDto);
+     void delBook(DeleteBookRequestDto deleteBookRequestDto,String token);
 
-    UpdateBookResponseDto updBook(UpdateBookRequestDto updateBookRequestDto,int id);
+    UpdateBookResponseDto updBook(UpdateBookRequestDto updateBookRequestDto,int id,String token);
 }
