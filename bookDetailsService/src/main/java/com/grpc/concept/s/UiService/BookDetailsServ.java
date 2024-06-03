@@ -14,14 +14,14 @@ public class BookDetailsServ {
     @Autowired
     private Client grpcClient;
 
-    public CreateBookDetailsResponseDto createB(CreateBookDetails createBookDetails){
-        return grpcClient.createBookDet(createBookDetails);
+    public CreateBookDetailsResponseDto createB(CreateBookDetails createBookDetails,String token){
+        return grpcClient.createBookDet(createBookDetails,token);
     }
-    public GetBookDetailsResponse   getB(int id){
+    public GetBookDetailsResponse   getB(int id,String token){
         GetBookDto getBookDto=GetBookDto.builder().bookId(id).build();
-        return grpcClient.getBookDet(getBookDto);
+        return grpcClient.getBookDet(getBookDto,token);
     }
-    public List<GetAllBookResponseDto>  getAllB(Map<String,String> params){
+    public List<GetAllBookResponseDto>  getAllB(Map<String,String> params,String token){
         int pageSize=100; //defaultSize
         String order="";
 
@@ -32,15 +32,15 @@ public class BookDetailsServ {
             order=params.get("order");
         }
         GetAllBookRequestDto getAllBookRequestDto=GetAllBookRequestDto.builder().order(order).pageSize(pageSize).build();
-        return grpcClient.getAllBookDet(getAllBookRequestDto);
+        return grpcClient.getAllBookDet(getAllBookRequestDto,token);
     }
 
-    public void deleteB(int id){
+    public void deleteB(int id,String token){
         DeleteBookRequestDto deleteBookRequestDto=DeleteBookRequestDto.builder().id(id).build();
-        grpcClient.delBook(deleteBookRequestDto);
+        grpcClient.delBook(deleteBookRequestDto,token);
     }
 
-    public UpdateBookResponseDto updateBookMethod(UpdateBookRequestDto updateBookRequestDto,int id){
-        return grpcClient.updBook(updateBookRequestDto,id);
+    public UpdateBookResponseDto updateBookMethod(UpdateBookRequestDto updateBookRequestDto,int id,String token){
+        return grpcClient.updBook(updateBookRequestDto,id,token);
     }
 }
