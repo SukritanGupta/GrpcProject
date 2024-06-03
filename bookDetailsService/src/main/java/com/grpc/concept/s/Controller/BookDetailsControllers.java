@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.Map;
 @Api(tags = "BookDetailsRestEndpoints", description = "Endpoints for BookDetails grpc services")
 @AllArgsConstructor
 @Slf4j
+@CrossOrigin(origins = "http://localhost:4500")
 //@SuppressWarnings("deprecation")
 public class BookDetailsControllers {
 //    @Autowired
@@ -46,9 +48,11 @@ public class BookDetailsControllers {
         return  new ResponseEntity<>( bookDetailsServ.getB(id,jwtToken),HttpStatus.OK);
     }
 
+    @Transactional
     @GetMapping("/getAllBooks")
     @ApiOperation(value = "Get pageSize and order params ", notes = "Return list of books")
     public ResponseEntity< List<GetAllBookResponseDto>> getAllBooks(@RequestHeader(value = "Authorization",required = false) String authorizationHeader,@RequestParam(value = "pageSize",required = false) String pageSize, @RequestParam(value = "order",required = false) String order){
+        log.info("Get all books controller call");
         Map<String,String> requestParam=new HashMap<>();
             requestParam.put("pageSize",pageSize);
              requestParam.put("order",order);
@@ -59,6 +63,7 @@ public class BookDetailsControllers {
         return   new ResponseEntity<>(bookDetailsServ.getAllB(requestParam,jwtToken),HttpStatus.OK);
     }
 
+    @Transactional
     @DeleteMapping("/deleteBook/{id}")
     @ApiOperation(value = "Get Book Id", notes = "Delete the book according to the bookId")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -70,7 +75,6 @@ public class BookDetailsControllers {
    bookDetailsServ.deleteB(id,jwtToken);
     }
 
-//    may be in future  logic change
     @PutMapping("/updateBook/{id}")
     @ApiOperation(value = "Pass UpdateBookResponse Data transfer object", notes = "Update a book Details")
     public ResponseEntity< UpdateBookResponseDto> update(@RequestHeader(value="Authorization",required = false) String authorizationHeader,@RequestBody UpdateBookRequestDto updateBookRequestDto,@PathVariable int id){

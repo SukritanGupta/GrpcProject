@@ -44,6 +44,7 @@ private  JwtAuthenticationFilter jwtAuthenticationFilter;
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+                 .cors().and()
                 .authorizeHttpRequests(
                         req->req.antMatchers("/login/**","/register/**","/h2-console/**")
 
