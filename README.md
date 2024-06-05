@@ -75,4 +75,42 @@
 #### DeleteBook Api : Delete call 
 ##### url : http://localhost:8081/deleteBook/{bookId} 
 
+## Grpc Services and payload: 
+#### CreateBook : 
+##### example payload: 
+{
+    "bookDetails": {
+        "bookId": 3,
+        "authorName": "Sukritan",
+        "name": "RD sharma",
+        "price": 90
+    }
+} 
+#### Get Book : 
+##### example payload: 
+{
+    "bookId": 1
+}
+#### GetAllBooks: 
+##### example payload: 
+{
+   "sizeofPage":5 
+}
 
+#### UpdateBook :
+##### example payload: 
+{
+     "bookDetails": {
+        "bookId": 1,
+        "authorName": "Sukritan_Gupta",
+        "name": "Cpp programming",
+        "price":500
+    }
+}
+#### Delete book : 
+##### example payload: 
+{
+    "id": 52900
+}
+
+Copy Right By sukritan gupta 2024
