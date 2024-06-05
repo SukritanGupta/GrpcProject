@@ -1,6 +1,6 @@
 ## Crud operations using Grpc services with the Rest Wrapper.
-# Basic Five api's created CreateBook,GetBook,GetAllBooks,UpdateBook and DeleteBook.
-# Also implemented Jwt Authentication and Role based Authorization 
+### Basic Five api's created CreateBook,GetBook,GetAllBooks,UpdateBook and DeleteBook.
+### Also implemented Jwt Authentication and Role based Authorization 
 # implemented Profiles local and prod , in prod data is stored in persist h2 database using file mechanism and in local profile data is stored in inmemory h2 database .
 # In prod profile user need to pass bearer token for authentication and in local profile no need to pass token.
 # Grpc client also created for making rest wrapper on top of grpc service.
