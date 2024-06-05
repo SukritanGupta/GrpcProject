@@ -18,7 +18,61 @@
 #### windows 10 above needed.
 #### jdk 17 present in sytem.
 #### clone the project by running this command : git clone https://github.com/SukritanGupta/GrpcProject.git
+#### Postman
+#### github 
 
 ## Prequiste 
 #### Should know about java 17, functional programming , SpringBoot , Angular 17 , Spring security , grpc , protobufs etc
 #### Should know about spring data jpa and basic sql queries.
+#### Should know about git.
+
+## Authentication Controllers
+#### Create User: Post request
+##### url : http://localhost:8081/register 
+##### example payload  : 
+{
+    "username":"Sukritan1",
+    "password":"aman",
+    "role":"USER"
+  
+}
+#### Get User/login: 
+##### url : http://localhost:8081/login
+##### example payload: 
+{
+   "userName":"Amu",
+    "password":"aman"
+}
+##### Copy the token and used in grpc services and rest api's for authorization.
+
+## Rest Api's 
+#### Need to pass Bearer token in Authorization header , also Content-Type and Accept application/json in headers.
+#### Create Book Api:  Post call
+##### url : http://localhost:8081/createBookDetails 
+##### for example in requestBody pass: 
+#####  
+{
+    "bookId":7000,
+    "name":"Ansii C programming",
+    "authorName":"Sukritan gupta",
+    "price":9800
+}
+#### Get Book Api : Get call
+##### url : http://localhost:8081/getBookDetails/{bookId} 
+
+#### GetAllBooks Api: Get call
+##### url : http://localhost:8081/getAllBooks
+
+#### UpdateBook Api : Put call 
+##### url : http://localhost:8081/updateBook/{BookId} 
+##### example payload: 
+{
+  "name":"Ansi",
+    "authorName":"Aman Mahajan",
+    "price":600  
+}
+
+#### DeleteBook Api : Delete call 
+##### url : http://localhost:8081/deleteBook/{bookId} 
+
+
