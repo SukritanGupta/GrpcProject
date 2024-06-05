@@ -113,4 +113,30 @@
     "id": 52900
 }
 
+## Run envoy filter : 
+### Prerequiste : Docker installed in local System 
+#### Create docker image : docker build -t my-envoy1 . 
+#### Run docker image : docker run -d --name my-envoy-container -p 8080:8080 my-envoy1 
+
+## Transcoding : Payload same as other service payload 
+#### Create Book : Post request 
+##### url : http://localhost:8080/createBook
+
+#### GetBook : Get request 
+##### url : http://localhost:8080/getBook/{bookId} 
+
+#### GetAllBooks: Get request 
+##### url : http://localhost:8080/getAllBook 
+
+#### UpdateBook : Put request 
+##### url : http://localhost:8080/updateBook/{bookId} 
+##### example payload: 
+{
+     "bookDetails": {
+        "authorName": "Sukritan_Gupta",
+        "name": "Cpp programming",
+        "price":500
+    }
+}
+
 Copy Right By sukritan gupta 2024
