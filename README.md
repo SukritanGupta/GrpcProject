@@ -13,3 +13,12 @@
 #### -> Exception handling also done in both Grpc Services and rest api's.
 #### -> Springboot actuator also implemented to monitor the health of application.
 #### -> java 17 is used 
+
+## For installation 
+#### windows 10 above needed.
+#### jdk 17 present in sytem.
+#### clone the project by running this command : git clone https://github.com/SukritanGupta/GrpcProject.git
+
+## Prequiste 
+#### Should know about java 17, functional programming , SpringBoot , Angular 17 , Spring security , grpc , protobufs etc
+#### Should know about spring data jpa and basic sql queries.
