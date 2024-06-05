@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ public class BookDetailsControllers {
     private BookDetailsServ bookDetailsServ;
 
     @PostMapping("/createBookDetails")
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     @ApiOperation(value = "BookDetails payload", notes = "Create a bookDetails")
     public  ResponseEntity<CreateBookDetailsResponseDto> createBookDet(@RequestHeader(value = "Authorization",required = false) String authorizationHeader,@RequestBody CreateBookDetails createBookDetails){
         String jwtToken=null;
@@ -38,6 +40,7 @@ public class BookDetailsControllers {
     }
 
     @GetMapping("/getBookDetails/{id}")
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     @ApiOperation(value = "Get Book Id", notes = "Returns a BookDetails according to bookId")
     public ResponseEntity<GetBookDetailsResponse> getBookDetails(@RequestHeader(value="Authorization",required = false) String authorizationHeader,@PathVariable int id){
 
@@ -50,6 +53,7 @@ public class BookDetailsControllers {
 
     @Transactional
     @GetMapping("/getAllBooks")
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     @ApiOperation(value = "Get pageSize and order params ", notes = "Return list of books")
     public ResponseEntity< List<GetAllBookResponseDto>> getAllBooks(@RequestHeader(value = "Authorization",required = false) String authorizationHeader,@RequestParam(value = "pageSize",required = false) String pageSize, @RequestParam(value = "order",required = false) String order){
         log.info("Get all books controller call");
@@ -65,6 +69,7 @@ public class BookDetailsControllers {
 
     @Transactional
     @DeleteMapping("/deleteBook/{id}")
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     @ApiOperation(value = "Get Book Id", notes = "Delete the book according to the bookId")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void del(@RequestHeader(value="Authorization",required = false) String authorizationHeader,@PathVariable int id){
@@ -76,6 +81,7 @@ public class BookDetailsControllers {
     }
 
     @PutMapping("/updateBook/{id}")
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     @ApiOperation(value = "Pass UpdateBookResponse Data transfer object", notes = "Update a book Details")
     public ResponseEntity< UpdateBookResponseDto> update(@RequestHeader(value="Authorization",required = false) String authorizationHeader,@RequestBody UpdateBookRequestDto updateBookRequestDto,@PathVariable int id){
         String jwtToken=null;

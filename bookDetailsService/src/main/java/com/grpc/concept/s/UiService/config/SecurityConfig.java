@@ -26,7 +26,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Profile("prod")
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     @Autowired
     private CustomerLogoutHandler logoutHandler;
@@ -49,6 +49,7 @@ private  JwtAuthenticationFilter jwtAuthenticationFilter;
                         req->req.antMatchers("/login/**","/register/**","/h2-console/**")
 
                                 .permitAll()
+//                                .antMatchers("/getAllBooks").hasAnyAuthority("ADMIN")
                                 .anyRequest()
                                 .authenticated()
                 ).userDetailsService(userDetailsServiceImp)
