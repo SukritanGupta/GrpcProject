@@ -6,17 +6,35 @@ import "google/protobuf/wrappers.proto";
 import "google/protobuf/empty.proto";
 import "google/api/field_behavior.proto";
 import "google/rpc/error_details.proto";
-
+import "google/api/annotations.proto";
 option java_multiple_files=true;
 option java_package = "com.grpc.GRPC";
 
 service BooKDetailsService {
 
   rpc createBook(CreateBookRequest) returns (CreateBookResponse) {
+    option (google.api.http) = {
+      post: "/createBook",
+      body: "*"
+    };
   }
-  rpc getBook(GetBookRequest) returns (GetBookResponse);
-  rpc getAllBook(GetAllBooksRequest) returns (GetAllBookResponse);
-  rpc updateBook(UpdateBookRequest) returns (UpdateBookResponse);
+  rpc getBook(GetBookRequest) returns (GetBookResponse){
+    option (google.api.http) = {
+      get: "/getBook/{bookId}"
+    };
+  }
+  rpc getAllBook(GetAllBooksRequest) returns (GetAllBookResponse){
+    option (google.api.http) = {
+      get: "/getAllBook"
+    };
+  }
+
+  rpc updateBook(UpdateBookRequest) returns (UpdateBookResponse){
+    option (google.api.http) = {
+      put: "/updateBook/{bookDetails.bookId}",
+      body: "*"
+    };
+  }
   rpc deleteBook(DeleteBookRequest) returns (google.protobuf.Empty);
 }
 

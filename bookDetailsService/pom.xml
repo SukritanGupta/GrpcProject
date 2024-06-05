@@ -135,35 +135,35 @@
             </plugin>
 
                         <!-- Other plugins -->
-                        <plugin>
-                            <groupId>com.diffplug.spotless</groupId>
-                            <artifactId>spotless-maven-plugin</artifactId>
-                            <version>2.17.5</version> <!-- Use the latest version available -->
-                            <configuration>
-                                <java>
-                                    <googleJavaFormat>
-                                        <style>GOOGLE</style> <!-- or AOSP -->
-                                    </googleJavaFormat>
-                                    <includes>
-                                        <include>src/main/java/**/*.java</include>
-                                    </includes>
-                                    <excludes>
-                                        <exclude>src/main/java/com/grpc/concept/s/apiException/**</exclude>
-                                    </excludes>
+<!--                        <plugin>-->
+<!--                            <groupId>com.diffplug.spotless</groupId>-->
+<!--                            <artifactId>spotless-maven-plugin</artifactId>-->
+<!--                            <version>2.17.5</version> &lt;!&ndash; Use the latest version available &ndash;&gt;-->
+<!--                            <configuration>-->
+<!--                                <java>-->
+<!--                                    <googleJavaFormat>-->
+<!--                                        <style>GOOGLE</style> &lt;!&ndash; or AOSP &ndash;&gt;-->
+<!--                                    </googleJavaFormat>-->
+<!--                                    <includes>-->
+<!--                                        <include>src/main/java/**/*.java</include>-->
+<!--                                    </includes>-->
+<!--                                    <excludes>-->
+<!--                                        <exclude>src/main/java/com/grpc/concept/s/apiException/**</exclude>-->
+<!--                                    </excludes>-->
 
-                                </java>
+<!--                                </java>-->
 
-                            </configuration>
-                            <executions>
-                                <execution>
-                                    <goals>
-                                        <goal>apply</goal>
-                                        <goal>check</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
+<!--                            </configuration>-->
+<!--                            <executions>-->
+<!--                                <execution>-->
+<!--                                    <goals>-->
+<!--                                        <goal>apply</goal>-->
+<!--                                        <goal>check</goal>-->
+<!--                                    </goals>-->
+<!--                                </execution>-->
+<!--                            </executions>-->
 
-                        </plugin>
+<!--                        </plugin>-->
 
 
         </plugins>
