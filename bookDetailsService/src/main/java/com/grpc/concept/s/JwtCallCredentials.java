@@ -3,7 +3,6 @@ package com.grpc.concept.s;
 import io.grpc.CallCredentials;
 import io.grpc.Metadata;
 import io.grpc.Status;
-import io.grpc.stub.AbstractStub;
 import org.springframework.context.annotation.Profile;
 
 import java.util.concurrent.Executor;

@@ -2,14 +2,7 @@ package com.grpc.concept.s.UiService.config;
 
 import com.grpc.concept.s.UiService.JwtService;
 import com.grpc.concept.s.UiService.UserDetailsServiceImp;
-//import com.jwt_Auth.Jwt_Auth.service.JwtService;
-//import com.jwt_Auth.Jwt_Auth.service.UserDetailsServiceImp;
-//import jakarta.servlet.FilterChain;
-//import jakarta.servlet.ServletException;
-//import jakarta.servlet.http.HttpServletRequest;
-//import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

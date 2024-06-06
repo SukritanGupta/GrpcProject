@@ -1,6 +1,8 @@
 package com.grpc.concept.s;
 
+import com.google.protobuf.Any;
 import com.google.protobuf.Int32Value;
+import com.google.rpc.BadRequest;
 import com.grpc.GRPC.*;
 import com.grpc.concept.s.RestDto.*;
 import com.grpc.concept.s.apiException.InvalidArgumentException;
@@ -48,7 +50,16 @@ public class GrpcClientMock implements Client {
             return getBookDetailsResponse;
         }
         catch(StatusRuntimeException statusRuntimeException){
-            throw new NotFoundException(statusRuntimeException.getMessage());
+            ValidationError violations = ValidationError.newBuilder()
+                    .setField("bookId")
+                    .setDescription("bookId is not present")
+                    .build();
+            Any metadata = Any.pack(violations);
+            BadRequest.FieldViolation fieldViolation = BadRequest.FieldViolation.newBuilder()
+                    .setField(violations.getField())
+                    .setDescription(violations.getDescription())
+                    .build();
+            throw new NotFoundException(statusRuntimeException.getMessage(), BadRequest.newBuilder().addFieldViolations(fieldViolation).build());
         }
     }
 
@@ -67,7 +78,16 @@ public class GrpcClientMock implements Client {
             client.deleteBookMethod(DeleteBookRequest.newBuilder().setId(deleteBookRequestDto.getId()).build());
         }
         catch(StatusRuntimeException statusRuntimeException){
-            throw new NotFoundException(statusRuntimeException.getMessage());
+            ValidationError violations = ValidationError.newBuilder()
+                    .setField("bookId")
+                    .setDescription("bookId is not present")
+                    .build();
+            Any metadata = Any.pack(violations);
+            BadRequest.FieldViolation fieldViolation = BadRequest.FieldViolation.newBuilder()
+                    .setField(violations.getField())
+                    .setDescription(violations.getDescription())
+                    .build();
+            throw new NotFoundException(statusRuntimeException.getMessage(),BadRequest.newBuilder().addFieldViolations(fieldViolation).build());
         }
 
     }
