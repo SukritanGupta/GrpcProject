@@ -2,18 +2,14 @@ package com.grpc.concept.s.service;
 
 import com.google.protobuf.Any;
 import com.google.rpc.BadRequest;
-import com.google.rpc.ErrorInfo;
 import com.grpc.GRPC.*;
 import com.grpc.concept.s.Model.BookDetailsEntity;
 import com.grpc.concept.s.Repo.BookDetailsRepo;
 import com.grpc.concept.s.apiException.AlreadyExistException;
 import com.grpc.concept.s.apiException.InvalidArgumentException;
 import com.grpc.concept.s.apiException.NotFoundException;
-import io.grpc.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -69,7 +65,16 @@ public class BookDetService {
     public GetBookResponse getBooks(GetBookRequest request){
         Optional<BookDetailsEntity> b1= bookDetailsRepo.findById(request.getBookId());
         if(b1.isEmpty()){
-            throw new NotFoundException("Sorry Book Details not found");
+            ValidationError violations = ValidationError.newBuilder()
+                    .setField("bookId")
+                    .setDescription("bookId is not present")
+                    .build();
+            Any metadata = Any.pack(violations);
+            BadRequest.FieldViolation fieldViolation = BadRequest.FieldViolation.newBuilder()
+                    .setField(violations.getField())
+                    .setDescription(violations.getDescription())
+                    .build();
+            throw new NotFoundException("Sorry Book Details not found", BadRequest.newBuilder().addFieldViolations(fieldViolation).build());
         }
 
         BookDetailsEntity bookDetailsEntity=b1.get();
@@ -139,7 +144,16 @@ public class BookDetService {
     public void deleteBookMethod(DeleteBookRequest request){
         Optional<BookDetailsEntity> b1=bookDetailsRepo.findById(request.getId());
         if(b1.isEmpty()){
-             throw new NotFoundException("Book not found");
+            ValidationError violations = ValidationError.newBuilder()
+                    .setField("bookId")
+                    .setDescription("bookId is not present")
+                    .build();
+            Any metadata = Any.pack(violations);
+            BadRequest.FieldViolation fieldViolation = BadRequest.FieldViolation.newBuilder()
+                    .setField(violations.getField())
+                    .setDescription(violations.getDescription())
+                    .build();
+             throw new NotFoundException("Book not found", BadRequest.newBuilder().addFieldViolations(fieldViolation).build());
         }
         bookDetailsRepo.delete(b1.get());
     }

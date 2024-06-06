@@ -1,7 +1,6 @@
 package com.grpc.concept.s.UiService;
 
 import com.grpc.concept.s.Client;
-import com.grpc.concept.s.GrpcClient;
 import com.grpc.concept.s.RestDto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

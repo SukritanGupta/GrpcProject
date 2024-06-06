@@ -30,10 +30,12 @@ public class GrpcApiExceptionHandler {
     @GrpcExceptionHandler(NotFoundException.class)
     public StatusRuntimeException handleNotFoundException(NotFoundException cause) {
         log.error("Not Found exception", cause);
+        BadRequest badRequest=cause.getBadRequest();
         Status status =
                 Status.newBuilder()
                         .setCode(Code.NOT_FOUND_VALUE)
                         .setMessage(cause.getMessage())
+                        .addDetails(Any.pack(badRequest))
                         .build();
         return StatusProto.toStatusRuntimeException(status);
     }

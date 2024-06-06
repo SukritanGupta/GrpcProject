@@ -1,6 +1,6 @@
 package com.grpc.concept.s.apiException;
 
-import com.google.rpc.BadRequest;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
