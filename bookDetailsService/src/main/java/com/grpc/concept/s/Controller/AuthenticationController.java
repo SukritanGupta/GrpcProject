@@ -31,7 +31,7 @@ public class AuthenticationController {
 //    Basically user able to logout in all the created token
    @PostMapping("/logout")
     public void logout(@RequestBody String token){
-
+//        Here I have write the logic for getting the user.
    }
 
 
