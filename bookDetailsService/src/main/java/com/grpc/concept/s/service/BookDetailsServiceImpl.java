@@ -2,20 +2,24 @@ package com.grpc.concept.s.service;
 
 import com.google.protobuf.Empty;
 import com.grpc.GRPC.*;
+import com.grpc.concept.s.apiException.InvalidArgumentException;
 import com.grpc.concept.s.service.config.LoggingInterceptor;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @GrpcService( interceptors = {LoggingInterceptor.class})
 @Slf4j
+@RequiredArgsConstructor
 public class BookDetailsServiceImpl extends BooKDetailsServiceGrpc.BooKDetailsServiceImplBase {
-    @Autowired
-    private BookDetService bookDetService;
+    private final BookDetService bookDetService;
     @Override
     public void createBook(CreateBookRequest request, StreamObserver<CreateBookResponse> responseObserver) {
-       CreateBookResponse createBookResponse=  bookDetService.createBooks(request);
+
+            CreateBookResponse createBookResponse = bookDetService.createBooks(request);
             log.info("Successfully Executed create book details Service");
             responseObserver.onNext(createBookResponse);
             responseObserver.onCompleted();

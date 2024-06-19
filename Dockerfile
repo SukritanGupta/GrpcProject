@@ -1,9 +1,4 @@
-FROM envoyproxy/envoy:v1.21.0
 
-COPY envoy.yaml /etc/envoy/envoy.yaml
-COPY bookDetailsProto/target/proto_descriptor.pb/bookDetailsProto-0.0.1-SNAPSHOT.pb /etc/envoy/proto_descriptor.pb
-
-CMD ["envoy", "-c", "/etc/envoy/envoy.yaml"]
 FROM openjdk:17-jdk-alpine
 
 # Set the working directory

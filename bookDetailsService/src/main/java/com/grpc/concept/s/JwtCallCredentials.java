@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Profile;
 import java.util.concurrent.Executor;
 
 @Profile("prod")
-//CallCredentials to include the JWT token in the metadata of each gRPC call.
+//CallCredentials to include the Bearer token in the metadata of each gRPC call.
 public class JwtCallCredentials extends CallCredentials {
 
     private final String jwtToken;

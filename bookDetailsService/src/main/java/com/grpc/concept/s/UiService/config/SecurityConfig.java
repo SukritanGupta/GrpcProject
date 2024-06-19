@@ -29,8 +29,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     @Autowired
     private CustomerLogoutHandler logoutHandler;
-
-//    UserDetailsServiceImp
     @Autowired
 private UserDetailsServiceImp userDetailsServiceImp;
 @Autowired
@@ -45,10 +43,10 @@ private  JwtAuthenticationFilter jwtAuthenticationFilter;
                 .csrf(AbstractHttpConfigurer::disable)
                  .cors().and()
                 .authorizeHttpRequests(
-                        req->req.antMatchers("/login/**","/register/**","/h2-console/**")
+                        req->req.antMatchers("/login/**","/register/**","/h2-console/**","/actuator","/actuator",
+                                        "/swagger-ui.html","/swagger-resources/**","/webjars/**" ,"/v2/api-docs","/actuator/**")
 
                                 .permitAll()
-//                                .antMatchers("/getAllBooks").hasAnyAuthority("ADMIN")
                                 .anyRequest()
                                 .authenticated()
                 ).userDetailsService(userDetailsServiceImp)

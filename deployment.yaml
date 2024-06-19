@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bookbackenddeployment1
-  namespace: suk4
+  name: bookbackenddeployment2
+  namespace: suk6
   labels:
     app: bookbackend
 spec:
@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: bookbackend
-          image: bookbackendconcept:latest
+          image: dockback1img:latest
           imagePullPolicy: Never
           ports:
             - containerPort: 8081
@@ -28,8 +28,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: bookdetails-service1
-  namespace: suk4
+  name: bookdetails-service2
+  namespace: suk6
 spec:
   selector:
     app: bookbackend

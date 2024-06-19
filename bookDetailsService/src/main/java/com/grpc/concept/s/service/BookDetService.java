@@ -10,6 +10,8 @@ import com.grpc.concept.s.apiException.InvalidArgumentException;
 import com.grpc.concept.s.apiException.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,48 +21,51 @@ public class BookDetService {
     @Autowired
     private BookDetailsRepo bookDetailsRepo;
     public CreateBookResponse createBooks(CreateBookRequest request){
-        if(request.getBookDetails().getBookId()==0){
-           throw new InvalidArgumentException("Id must not be zero ");
-        }
-        if(request.getBookDetails().getName().isEmpty()){
-            throw new InvalidArgumentException("Name of book is required");
-        }
-        if(request.getBookDetails().getAuthorName().isEmpty()){
-            throw new InvalidArgumentException("AuthorName is required");
-        }
-        if(request.getBookDetails().getPrice() ==0){
-            throw new InvalidArgumentException("Price cannot be zero");
-        }
-        if(request.getBookDetails().getName().length()>40 || request.getBookDetails().getName().length()<2){
-            throw new InvalidArgumentException("Name must not be empty");
-        }
-        if(request.getBookDetails().getAuthorName().length()>30 || request.getBookDetails().getAuthorName().length()<3){
-            throw new InvalidArgumentException("AuthorName must be greater than 3 and less than 30");
-        }
-        if(bookDetailsRepo.findById(request.getBookDetails().getBookId()).isPresent()){
-            ValidationError violations = ValidationError.newBuilder()
-                    .setField("id")
-                    .setDescription("id is already present")
-                    .build();
-            Any metadata = Any.pack(violations);
-            BadRequest.FieldViolation fieldViolation = BadRequest.FieldViolation.newBuilder()
-                    .setField(violations.getField())
-                    .setDescription(violations.getDescription())
-                    .build();
 
-            throw new AlreadyExistException("Id already in used please use another id",BadRequest.newBuilder().addFieldViolations(fieldViolation).build());
-        }
+            if (request.getBookDetails().getBookId() == 0) {
+                throw new InvalidArgumentException("Id must not be zero ");
+            }
+            if (request.getBookDetails().getName().isEmpty()) {
+                throw new InvalidArgumentException("Name of book is required");
+            }
+            if (request.getBookDetails().getAuthorName().isEmpty()) {
+                throw new InvalidArgumentException("AuthorName is required");
+            }
+            if (request.getBookDetails().getPrice() == 0) {
+                throw new InvalidArgumentException("Price cannot be zero and must be numeric");
+            }
+            if (request.getBookDetails().getName().length() > 40 || request.getBookDetails().getName().length() < 2) {
+                throw new InvalidArgumentException("Name must not be greater than 1 and less than 40");
+            }
+            if (request.getBookDetails().getAuthorName().length() > 30 || request.getBookDetails().getAuthorName().length() < 3) {
+                throw new InvalidArgumentException("AuthorName must be greater than 3 and less than 30");
+            }
+            if (bookDetailsRepo.findById(request.getBookDetails().getBookId()).isPresent()) {
+                ValidationError violations = ValidationError.newBuilder()
+                        .setField("id")
+                        .setDescription("id is already present")
+                        .build();
+                Any metadata = Any.pack(violations);
+                BadRequest.FieldViolation fieldViolation = BadRequest.FieldViolation.newBuilder()
+                        .setField(violations.getField())
+                        .setDescription(violations.getDescription())
+                        .build();
 
-        CreateBookResponse createBookResponse = CreateBookResponse.newBuilder()
-                .setSuccessMessage("Successfully added")
-                .build();
-        BookDetailsEntity bookDetailsEntity=new BookDetailsEntity();
-        bookDetailsEntity.setBookId(request.getBookDetails().getBookId());
-        bookDetailsEntity.setName(request.getBookDetails().getName());
-        bookDetailsEntity.setAuthorName(request.getBookDetails().getAuthorName());
-        bookDetailsEntity.setPrice(request.getBookDetails().getPrice());
-        bookDetailsRepo.save(bookDetailsEntity);
-        return createBookResponse;
+                throw new AlreadyExistException("Id already in used please use another id", BadRequest.newBuilder().addFieldViolations(fieldViolation).build());
+            }
+
+            CreateBookResponse createBookResponse = CreateBookResponse.newBuilder()
+                    .setSuccessMessage("Successfully added")
+                    .build();
+            BookDetailsEntity bookDetailsEntity = new BookDetailsEntity();
+            bookDetailsEntity.setBookId(request.getBookDetails().getBookId());
+            bookDetailsEntity.setName(request.getBookDetails().getName());
+            bookDetailsEntity.setAuthorName(request.getBookDetails().getAuthorName());
+            bookDetailsEntity.setPrice(request.getBookDetails().getPrice());
+            bookDetailsRepo.save(bookDetailsEntity);
+            return createBookResponse;
+
+
     }
     public GetBookResponse getBooks(GetBookRequest request){
         Optional<BookDetailsEntity> b1= bookDetailsRepo.findById(request.getBookId());
@@ -88,7 +93,7 @@ public class BookDetService {
                 .setPrice(book.getPrice()).build()).toList();
         if(request.hasOrder()){
 // later I will implement descending, according to field Name
-            bookDetailsList= bookDetailsList.stream().sorted().collect(Collectors.toList());
+            bookDetailsList= bookDetailsList.stream().sorted(Comparator.comparing(BookDetails::getBookId)).collect(Collectors.toList());
         }
         if(request.hasSizeofPage()){
             bookDetailsList= bookDetailsList.stream().limit(request.getSizeofPage().getValue()).collect(Collectors.toList());
@@ -108,10 +113,10 @@ public class BookDetService {
             throw new InvalidArgumentException("AuthorName is required");
         }
         if(request.getBookDetails().getPrice() ==0){
-            throw new InvalidArgumentException("Price cannot be zero");
+            throw new InvalidArgumentException("Price cannot be zero and must be numeric");
         }
         if(request.getBookDetails().getName().length()>40 || request.getBookDetails().getName().length()<2){
-            throw new InvalidArgumentException("Name must not be empty");
+            throw new InvalidArgumentException("Name must be greater than 1 and less than 40");
         }
         if(request.getBookDetails().getAuthorName().length()>30 || request.getBookDetails().getAuthorName().length()<3){
             throw new InvalidArgumentException("AuthorName must be greater than 3 and less than 30");

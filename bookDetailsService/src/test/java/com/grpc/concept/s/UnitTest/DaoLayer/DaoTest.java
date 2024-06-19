@@ -14,7 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
-//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ActiveProfiles("local")
 @DataJpaTest
 public class DaoTest {
