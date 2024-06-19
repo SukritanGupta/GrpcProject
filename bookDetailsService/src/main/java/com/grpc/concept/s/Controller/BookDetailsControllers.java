@@ -22,10 +22,8 @@ import java.util.Map;
 @Api(tags = "BookDetailsRestEndpoints", description = "Endpoints for BookDetails grpc services")
 @AllArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "http://localhost:4500")
-//@SuppressWarnings("deprecation")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class BookDetailsControllers {
-//    @Autowired
     private BookDetailsServ bookDetailsServ;
 
     @PostMapping("/createBookDetails")

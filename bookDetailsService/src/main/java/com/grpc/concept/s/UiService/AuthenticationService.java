@@ -32,7 +32,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(Users request) {
 
-        // check if user already exist. if exist than authenticate the user
+
         if(user_repo.findByUsername(request.getUsername()).isPresent()) {
             return new AuthenticationResponse(null, "User already exist");
         }
@@ -55,7 +55,7 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(LoginDto request) {
-//        Here First I have Authenticate the user
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUserName(),
@@ -73,7 +73,7 @@ public class AuthenticationService {
 
     }
 //    Here I logged out the user token, and save that value in database
-    private void revokeAllTokenByUser(Users user) {
+  private void revokeAllTokenByUser(Users user) {
         List<Token> validTokens = tokenRepository.findAllTokensByUser(user.getId());
         if(validTokens.isEmpty()) {
             return;

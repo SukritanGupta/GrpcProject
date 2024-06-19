@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  bookparent:
+    image: dockerback1img
+    container_name: dock1backcontainer
+    ports:
+      - "8081:8081"
+      - "9090:9090"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+
+
+  envoyfilter:
+    image: my-envoy1
+    container_name: my-envoy-container1
+    ports:
+      - "8080:8080"
+    depends_on:
+      - bookparent
+
+
+
+

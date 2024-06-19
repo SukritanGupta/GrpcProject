@@ -20,7 +20,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Profile("local")
-//Basically for the concept like with the local profile h2 non persist database is used
 public class GrpcClientMock implements Client {
     final BookDetService client;
 

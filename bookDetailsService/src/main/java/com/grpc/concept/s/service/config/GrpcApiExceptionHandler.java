@@ -4,6 +4,7 @@ package com.grpc.concept.s.service.config;
 import com.google.protobuf.Any;
 import com.google.rpc.BadRequest;
 import com.google.rpc.Code;
+import com.google.rpc.ErrorInfo;
 import com.google.rpc.Status;
 import com.grpc.concept.s.apiException.AlreadyExistException;
 import com.grpc.concept.s.apiException.InvalidArgumentException;
@@ -13,6 +14,9 @@ import io.grpc.protobuf.StatusProto;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.advice.GrpcAdvice;
 import net.devh.boot.grpc.server.advice.GrpcExceptionHandler;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @GrpcAdvice
@@ -24,8 +28,14 @@ public class GrpcApiExceptionHandler {
                 Status.newBuilder()
                         .setCode(Code.INVALID_ARGUMENT_VALUE)
                         .setMessage(cause.getMessage())
+                        .addDetails(Any.pack(ErrorInfo.newBuilder()
+                                .setReason("InvalidArgument")
+                                .setDomain("book")
+                                .putMetadata("exceptionType", cause.getClass().getName())
+                                .build()))
                         .build();
         return StatusProto.toStatusRuntimeException(status);
+
     }
     @GrpcExceptionHandler(NotFoundException.class)
     public StatusRuntimeException handleNotFoundException(NotFoundException cause) {

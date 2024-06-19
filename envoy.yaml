@@ -22,13 +22,17 @@ static_resources:
                           route:
                             cluster: grpc_service
                 http_filters:
+                  - name: envoy.filters.http.grpc_web
                   - name: envoy.filters.http.grpc_json_transcoder
                     typed_config:
                       "@type": type.googleapis.com/envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder
                       services: ["com.grpc.GRPC.BooKDetailsService"]
                       ignore_unknown_query_parameters: true
                       print_options:
+                        add_whitespace: true
                         always_print_primitive_fields: true
+                        always_print_enums_as_ints: false
+                        preserve_proto_field_names: false
                       proto_descriptor: "/etc/envoy/proto_descriptor.pb"
                   - name: envoy.filters.http.router
 

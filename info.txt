@@ -1,2 +1,7 @@
 Command to create image: docker build -t my-envoy1 .
 Command to run container: docker run -d --name my-envoy-container -p 8080:8080 my-envoy1
+docker run -d -p 8081:8081 -p 9090:9090 --name containerName imageName
+docker build -t bookparent .
+
+docker-compose build
+docker-compose up
